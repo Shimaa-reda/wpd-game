@@ -5,14 +5,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
-    meta:{title:"Home"}
+    meta:{title:"WPD Game"}
   },
-  // {
-  //   path: '/questions',
-  //   name: 'questions',
-  //   component: () => import('../components/game.vue'),
-  //   meta:{title:"Quiz"}
-  // },
+  {
+    path: '/day',
+    name: 'day',
+    component: () => import('../components/day.vue'),
+    
+  },
   // {
   //   path: '/score',
   //   name: 'score',
