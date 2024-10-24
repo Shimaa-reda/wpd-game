@@ -1,10 +1,17 @@
 <template>
   <div class="background-container">
-
     <nav v-if="showFact" class="navbar" style="z-index:2000">
       <img src="@/assets/images/logo_white.png" alt="Left Logo" class="left-logo" style="width:150px" />
       <img src="@/assets/images/care_white.png" alt="Right Logo" class="right-logo" style="width:150px" />
     </nav>
+    
+    <div v-if="showFact" class="ref container" style="z-index:2100">
+        <p style="color:red" v-if="currentFact.rsv">RSV Info: {{ currentFact.rsv }}</p>
+        <p style="color:red" v-if="currentFact.nicu">NICU Info: {{ currentFact.nicu }}</p>
+        <p style="color:red" v-if="currentFact.reference">{{ currentFact.reference }}</p>
+
+    </div>
+    
     <div class="content">
       <div class="top-right">
         <div class="counter">
@@ -29,7 +36,7 @@
           <div class="step" :class="{ checked: progressStep >= 4 }"></div>
           <div class="line" :class="{ active: progressStep >= 4 }"></div>
           <div class="step" :class="{ checked: progressStep === 5 }"></div>
-          <div class="line" :class="{ active: progressStep >= 5 }"></div> 
+          <div class="line" :class="{ active: progressStep >= 5 }"></div>
         </div>
 
         <p>
@@ -41,16 +48,16 @@
           <button class="action-btn" @click="sendCare"><img src="@/assets/images/care.png" alt="" style="width:25px; align-items:center"> Send Care</button>
           <button class="action-btn" @click="sendWish"><img src="@/assets/images/wish.png" alt="" style="width:25px; align-items:center"> Send a Wish</button>
         </div>
-
-       
       </div>
-       <!-- Modal for displaying fact -->
-        <div v-if="showFact" class="modal" style="z-index:1000">
-          <div class="modal-content">
-            <span class="close" @click="closeModal">×</span>
-            <p style="color:red">{{ currentFact }}</p>
-          </div>
+
+      <!-- Modal for displaying fact -->
+      <div v-if="showFact" class="modal" style="z-index:1000">
+        <div class="modal-content">
+          <span class="close" @click="closeModal">×</span>
+          <p style="color:red">{{ currentFact.text }}</p>
+          
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -64,18 +71,72 @@ const careCount = ref(0);
 const wishCount = ref(0);
 const progressStep = ref(0);
 const showFact = ref(false);
-const currentFact = ref("");
-const facts = [
-  "Fact 1: World Prematurity Day aims to raise awareness of premature birth and the challenges that women and babies may face.",
-  "Fact 2: Globally, 15 million preterm births are estimated every year.",
-  "Fact 3: Preterm birth is the leading cause of child deaths, accounting for more than 1 in 5 of all deaths of children occurring before their fifth birthday.",
-  "Fact 4: Preterm babies are at high risk for breathing difficulties due to their underdeveloped lungs.",
-  "Fact 5: Important steps help to reduce the risk of preterm birth: Quit smoking and avoid alcohol. Get prenatal care early and throughout pregnancy. Seek medical attention for any signs or symptoms of preterm labor. Wait at least 18 months between pregnancies.",
-  "Fact 6: Preterm babies are vulnerable to RSV-associated ALRI and severe disease because they have a less mature immune system, smaller airways, and diminished maternal antibody transfer.",
-  "Fact 7: Preterm infants accounted for a quarter of RSV-associated ALRI hospitalizations in all infants.",
-  "Fact 8: Mothers report significantly lower stress levels during Kangaroo Care compared to when the baby is receiving conventional care.",
-  "Fact 9: For preterm babies in the NICU, the skin-to-skin contact can improve recovery time and help them leave the NICU sooner."
-];
+const currentFact = ref({});
+const facts = ref([
+  {
+    id: 1,
+    text: "World Prematurity Day aims to raise awareness of premature birth and the challenges that women and babies may face.",
+    reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 2,
+    text: "Globally, 15 million preterm births are estimated every year.",
+    reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 3,
+    text: "Preterm birth is the leading cause of child deaths, accounting for more than 1 in 5 of all deaths of children occurring before their fifth birthday.",
+    reference: "Reference: 1. UNICEF. 150 million babies born preterm in the last decade. Available at: https://www.unicef.org/press-releases/150-million-babies-born-preterm-last-decade . Last accessed: October 2024. ",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 4,
+    text: "Preterm babies are at high risk for breathing difficulties due to their underdeveloped lungs.",
+    reference: "Reference: 1. World Health Organization (WHO). Newborn health: Challenges facing preterm babies. Available at: https://www.who.int/news-room/questions-and-answers/item/newborn-health-challenges-facing-preterm-babies . Last accessed: October 2024. ",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 5,
+    text: "Important steps help to reduce the risk of preterm birth: Quit smoking and avoid alcohol. Get prenatal care early and throughout pregnancy. Seek medical attention for any signs or symptoms of preterm labor. Wait at least 18 months between pregnancies.",
+    reference: "Reference: 1. Centers for Disease Control and Prevention (CDC). Preterm Birth. Available at: https://www.cdc.gov/maternal-infant-health/preterm-birth/index.html . Last accessed: October 2024.",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 6,
+    text: "Preterm babies are vulnerable to RSV-associated ALRI and severe disease because they have a less mature immune system, smaller airways, and diminished maternal antibody transfer.",
+    reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
+    rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
+    nicu: ""
+  },
+  {
+    id: 7,
+    text: "Preterm infants accounted for a quarter of RSV-associated ALRI hospitalizations in all infants.",
+    reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
+    rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
+    nicu: ""
+  },
+  {
+    id: 8,
+    text: "Mothers report significantly lower stress levels during Kangaroo Care compared to when the baby is receiving conventional care.",
+    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at:https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants.. Last accessed: October 2024.",
+    rsv: "",
+    nicu: ""
+  },
+  {
+    id: 9,
+    text: "For preterm babies in the NICU, the skin-to-skin contact can improve recovery time and help them leave the NICU sooner.",
+    reference: "Reference: 1. Johns Hopkins All Children's Hospital. Kangaroo Care. Available at: https://www.hopkinsmedicine.org/all-childrens-hospital/services/maternal-fetal-neonatal-institute/neonatology/about-our-nicu/kangaroo-care . Last accessed: October 2024.",
+    rsv: "",
+    nicu: "NICU: Neonatal intensive care unit."
+  }
+]);
 const usedFacts = ref([]);
 
 // Load counts from localStorage when the component is mounted
@@ -106,48 +167,47 @@ function sendWish() {
 }
 
 function incrementCount(type) {
+  // Increment the count only if it's less than 5
   if (progressStep.value < 5) {
     progressStep.value += 1;
 
     if (type === 'love') loveCount.value += 1;
     if (type === 'care') careCount.value += 1;
     if (type === 'wish') wishCount.value += 1;
-
-    // Show a fact when reaching a total of 5 clicks
+    
+    // Show a fact when reaching a total of 5 interactions
     if (progressStep.value === 5) {
-      showFactDisplay();
+      showRandomFact();
     }
   }
 }
 
-function showFactDisplay() {
-  // Choose a random not used fact 
-  let availableFacts = facts.filter(fact => !usedFacts.value.includes(fact));
+function showRandomFact() {
+  if (facts.value.length > 0) {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * facts.value.length);
+    } while (usedFacts.value.includes(randomIndex));
+    
+    currentFact.value = facts.value[randomIndex];
+    usedFacts.value.push(randomIndex);
+    showFact.value = true;
 
-  if (availableFacts.length === 0) {
-    // If no facts available, reset used facts
-    usedFacts.value = [];
-    availableFacts = facts;
+    // Reset progressStep to allow new interactions
+    progressStep.value = 0;
+
+    // Hide the fact after 5 seconds
+    // setTimeout(closeModal, 5000);
   }
-
-  const randomIndex = Math.floor(Math.random() * availableFacts.length);
-  currentFact.value = availableFacts[randomIndex];
-  usedFacts.value.push(currentFact.value);
-
-  showFact.value = true;
-
-  // Reset progressStep after (6 seconds)
-//   setTimeout(() => {
-//     progressStep.value = 0;
-//     showFact.value = false;
-//   }, 6000);
 }
+
 
 function closeModal() {
-  progressStep.value = 0;
   showFact.value = false;
+  currentFact.value = {};
 }
 </script>
+
 
 <style>
 body {
@@ -172,7 +232,7 @@ body {
   right: 10px;
   display: flex;
   gap: 10px;
-  width: 450px;
+  width: auto;
   padding: 20px;
   border-radius: 50px;
   background-color: rgba(1, 1, 1, 0.2);
@@ -416,4 +476,20 @@ p {
   top: 60px;
   right: 60px;
 }
+.ref {
+  position: absolute; 
+  bottom: 5px; 
+  left: 80px; 
+  z-index: 2100; 
+  text-align: left;
+ 
+  
+}
+
+.ref p{
+    font-size: 18px;
+    color: white !important;
+    font-weight: bold;
+}
+
 </style>
