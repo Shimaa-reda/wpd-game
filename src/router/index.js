@@ -11,6 +11,7 @@ const routes = [
     path: '/day',
     name: 'day',
     component: () => import('../components/day.vue'),
+    meta:{title:"WPD Game"}
     
   },
   // {
