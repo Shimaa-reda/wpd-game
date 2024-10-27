@@ -1,8 +1,10 @@
 <template>
-  <div>
-    Click Here to Clear Counters
-    <button @click="clear">Clear</button>
-    <p v-if="message">{{ message }}</p>
+  <div class="container">
+    <div class="content">
+      <h2>Clear Counters</h2>
+      <button @click="clear" class="clear-button">Clear</button>
+      <p v-if="message" class="message">{{ message }}</p>
+    </div>
   </div>
 </template>
 
@@ -10,38 +12,68 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// Define reactive state for counters and message
-const loveCount = ref(0);
-const careCount = ref(0);
-const wishCount = ref(0);
+
 const message = ref('');
 
-// Get the router instance
+
 const router = useRouter();
 
-// Clear function to remove counters from localStorage and reset values
 const clear = () => {
   // Clear specific counters from localStorage
   localStorage.removeItem('loveCount');
   localStorage.removeItem('careCount');
   localStorage.removeItem('wishCount');
 
-  // Reset reactive state
-  loveCount.value = 0;
-  careCount.value = 0;
-  wishCount.value = 0;
-
   // Set success message
   message.value = 'Data cleared successfully, back to home.';
 
-  // Redirect to home after a short delay
+  
   setTimeout(() => {
-    message.value = ''; // Clear the message
-    router.push('/');   // Navigate to the home route
-  }, 2000); // 2 seconds delay
+    message.value = ''; 
+    router.push('/');  
+  }, 2000); 
 };
 </script>
 
 <style scoped>
-/* Add any relevant styles here */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  background-color: #f0f0f0; 
+}
+
+.content {
+  text-align: center;
+  background-color: #ffffff; 
+  padding: 20px;
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+h2 {
+  margin-bottom: 20px; 
+  color: #333; 
+}
+
+.clear-button {
+  padding: 10px 20px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.clear-button:hover {
+  background-color: #0056b3; 
+}
+
+.message {
+  margin-top: 20px; 
+  color: #28a745; 
+}
 </style>

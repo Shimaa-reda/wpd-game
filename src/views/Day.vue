@@ -177,7 +177,7 @@ onMounted(() => {
   resetIdleTimer();
   
   const body = document.body;
-  const date = new Date("1 November 2024");
+  const date = new Date("29 October 2024");
   const day = date.getDate();
   const month = date.getMonth() + 1; // getMonth() returns 0-11
   console.log("day",day,"month",month);
@@ -187,15 +187,15 @@ onMounted(() => {
   // Define your background images based on day and month
   if (month === 10 && day === 29) {
     backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-    console.log('First Day');
+   
   } else if (month === 10 && day === 30) {
     backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
-    console.log('Second Day');
+   
   } else if (month === 10 && day === 31) {
     backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
-    console.log('Third Day');
+    
   } else if (month === 11 && day === 1) {
-    console.log('Fourth Day');
+    
     router.push({ name: 'lastday' });
   }
 
