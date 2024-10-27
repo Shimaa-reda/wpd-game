@@ -21,6 +21,12 @@ const routes = [
     component: () => import ('../views/LastDay.vue'),
     meta:{title:"WPD Game"}
   },
+  {
+    path: '/clear',
+    name: 'clear',
+    component: () => import ('../views/Clear.vue'),
+    meta:{title:"WPD Game"}
+  },
 ];
 
 const router = createRouter({

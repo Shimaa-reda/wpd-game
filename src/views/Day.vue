@@ -169,8 +169,6 @@ const originalFacts = [
 
 const facts = ref([...originalFacts]); // Initialize facts with the original list
 const usedFacts = ref([]);
-
-
 // Set up idle timer on mount and clear on unmount
 onMounted(() => {
   
