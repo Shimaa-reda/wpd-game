@@ -88,75 +88,108 @@ const wishCount = ref(0);
 const progressStep = ref(0);
 const showFact = ref(false);
 const currentFact = ref({});
-const facts = ref([
+let idleTimeout = null; // Holds the idle timeout reference
+
+// console.log("idel",idleTimeout)
+const originalFacts = [
   {
     id: 1,
-    text: "World Prematurity Day aims to raise awareness of premature birth and the challenges that women and babies may face.",
+    text: "World Prematurity Day aims to raise awareness of premature birth and the challenges that women and babies may face.<sup>1</sup>",
     reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
   {
     id: 2,
-    text: "Globally, <strong>15 million</strong> preterm births are estimated every year.",
+    text: "Globally, <strong>15 million</strong> preterm births are estimated every year.<sup>1</sup>",
     reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
   {
     id: 3,
-    text: "Preterm birth is the leading cause of child deaths, accounting for <strong>more than 1 in 5 of all deaths</strong> of children occurring before their fifth birthday.",
+    text: "Preterm birth is the leading cause of child deaths, accounting for <strong>more than 1 in 5 of all deaths</strong> of children occurring before their fifth birthday.<sup>1</sup>",
     reference: "Reference: 1. UNICEF. 150 million babies born preterm in the last decade. Available at: https://www.unicef.org/press-releases/150-million-babies-born-preterm-last-decade . Last accessed: October 2024. ",
     rsv: "",
     nicu: ""
   },
   {
     id: 4,
-    text: "Preterm babies are at high risk for breathing difficulties due to their underdeveloped lungs.",
+    text: "Preterm babies are at high risk for breathing difficulties due to their underdeveloped lungs.<sup>1</sup>",
     reference: "Reference: 1. World Health Organization (WHO). Newborn health: Challenges facing preterm babies. Available at: https://www.who.int/news-room/questions-and-answers/item/newborn-health-challenges-facing-preterm-babies . Last accessed: October 2024. ",
     rsv: "",
     nicu: ""
   },
   {
     id: 5,
-    text: "Important steps help to reduce the risk of preterm birth: Quit smoking and avoid alcohol. Get prenatal care early and throughout pregnancy. Seek medical attention for any signs or symptoms of preterm labor. Wait at least 18 months between pregnancies.",
+    text: `
+      <div>
+        Important steps help to reduce the risk of preterm birth:<sup>1</sup>
+        <ul style="list-style-type: disc; padding-left: 80px; text-align:left">
+          <li style="margin-top: 10px;">Quit smoking and avoid alcohol.</li>
+          <li>Get prenatal care early and throughout pregnancy.</li>
+          <li>Seek medical attention for any signs or symptoms of preterm labor.</li>
+          <li>Wait at least 18 months between pregnancies.</li>
+        </ul>
+      </div>
+    `,
     reference: "Reference: 1. Centers for Disease Control and Prevention (CDC). Preterm Birth. Available at: https://www.cdc.gov/maternal-infant-health/preterm-birth/index.html . Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
   {
     id: 6,
-    text: "Preterm babies are vulnerable to <strong>RSV-associated ALRI</strong> and severe disease because they have a less mature immune system, smaller airways, and diminished maternal antibody transfer.",
+    text: "Preterm babies are vulnerable to <strong>RSV-associated ALRI</strong> and severe disease because they have a less mature immune system, smaller airways, and diminished maternal antibody transfer.<sup>1</sup>",
     reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
     rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
     nicu: ""
   },
   {
     id: 7,
-    text: "Preterm infants accounted for a <strong>quarter</strong> of RSV-associated ALRI hospitalizations in all infants.",
+    text: "Preterm infants accounted for a <strong>quarter</strong> of RSV-associated ALRI hospitalizations in all infants.<sup>1</sup>",
     reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
     rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
     nicu: ""
   },
   {
     id: 8,
-    text: "Mothers report <strong>significantly lower stress levels</strong> during <strong>Kangaroo Care</strong> compared to when the baby is receiving conventional care.",
+    text: "Mothers report <strong>significantly lower stress levels</strong> during <strong>Kangaroo Care</strong> compared to when the baby is receiving conventional care.<sup>1</sup>",
     reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at:https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants.. Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
   {
     id: 9,
-    text: "For preterm babies in the NICU, <strong>the skin-to-skin contact</strong> can <strong>improve recovery time</strong> and help them leave the NICU sooner.",
+    text: "For preterm babies in the NICU, <strong>the skin-to-skin contact</strong> can <strong>improve recovery time</strong> and help them leave the NICU sooner.<sup>1</sup>",
     reference: "Reference: 1. Johns Hopkins All Children's Hospital. Kangaroo Care. Available at: https://www.hopkinsmedicine.org/all-childrens-hospital/services/maternal-fetal-neonatal-institute/neonatology/about-our-nicu/kangaroo-care . Last accessed: October 2024.",
     rsv: "",
     nicu: "NICU: Neonatal intensive care unit."
   }
-]);
+];
 
+const facts = ref([...originalFacts]); // Initialize facts with the original list
 const usedFacts = ref([]);
-let idleTimeout = null; // Holds the idle timeout reference
-console.log("idel",idleTimeout)
+
+function showRandomFact() {
+  if (facts.value.length > 0) {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * facts.value.length);
+    } while (usedFacts.value.includes(randomIndex));
+    
+    currentFact.value = facts.value[randomIndex];
+    usedFacts.value.push(randomIndex);
+    showFact.value = true;
+    progressStep.value = 0;
+  }
+  
+  // Reset facts and usedFacts once all facts have been shown
+  if (usedFacts.value.length === facts.value.length) {
+    usedFacts.value = [];
+    facts.value = [...originalFacts]; // Reset facts
+  }
+}
+
 // Set up idle timer on mount and clear on unmount
 onMounted(() => {
   loadCounts();
@@ -212,20 +245,6 @@ function incrementCount(type) {
     if (progressStep.value === 5) {
       showRandomFact();
     }
-  }
-}
-
-function showRandomFact() {
-  if (facts.value.length > 0) {
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * facts.value.length);
-    } while (usedFacts.value.includes(randomIndex));
-    
-    currentFact.value = facts.value[randomIndex];
-    usedFacts.value.push(randomIndex);
-    showFact.value = true;
-    progressStep.value = 0;
   }
 }
 
