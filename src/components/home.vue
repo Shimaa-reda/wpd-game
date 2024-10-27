@@ -71,8 +71,8 @@ body {
 
 .video-image {
   width: auto; 
-  margin-bottom: 20px; 
-  height: 700px;
+  /* margin-bottom: 20px;  */
+  height: 650px;
 }
 
 .care-button {
@@ -96,7 +96,7 @@ body {
 .bottom-right-logo {
   position: absolute;
   bottom: 30px;
-  right: 30px;
+  right: 35px;
   height: 50px;
 }
 
