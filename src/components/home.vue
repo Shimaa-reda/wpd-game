@@ -72,6 +72,7 @@ body {
 .video-image {
   width: auto; 
   margin-bottom: 20px; 
+  height: 700px;
 }
 
 .care-button {
@@ -84,8 +85,8 @@ body {
   cursor: pointer;
   width: 200px;
   position: absolute;
-  right: 150px;
-  bottom: 150px;
+  right: 200px;
+  bottom: 100px;
 }
 
 .care-button:hover {
@@ -94,8 +95,8 @@ body {
 
 .bottom-right-logo {
   position: absolute;
-  bottom: 60px;
-  right: 50px;
+  bottom: 30px;
+  right: 30px;
   height: 50px;
 }
 

@@ -15,7 +15,7 @@
       style="z-index:1000"
     />
     
-    <video ref="videoPlayer" autoplay loop muted playsinline @canplaythrough="playVideo">
+    <video ref="videoPlayer" autoplay loop muted playsinline @canplaythrough="playVideo" @ended="resetVideo">
       <source src="@/assets/images/Synagis - WPD Activation.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
@@ -42,14 +42,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
-// vars
 const loveCount = ref(0);
 const careCount = ref(0);
 const wishCount = ref(0);
 const videoPlayer = ref(null);
 const showNav = ref(false);
+let animationFrameId;
 
 // Function to read counters from local storage
 function loadCounters() {
@@ -58,27 +58,47 @@ function loadCounters() {
   wishCount.value = Number(localStorage.getItem('wishCount')) || 0;
 }
 
-// Load counters when the component is mounted
-onMounted(() => {
-  loadCounters();
-  
-  // Show logos after 11 seconds
-  setTimeout(() => {
-    showNav.value = true;
-  }, 11000); 
-  
-  //hide logos after 26 second
-  setTimeout(() => {
-    showNav.value = false;
-  }, 26000); 
-});
-
 // Function to play video
 function playVideo() {
   if (videoPlayer.value) {
     videoPlayer.value.play();
+    monitorVideoTime(); // Start monitoring video time
   }
 }
+
+// Function to reset video and start monitoring
+function resetVideo() {
+  videoPlayer.value.currentTime = 0;
+  playVideo();
+}
+
+// Function to monitor video time and show/hide logos
+function monitorVideoTime() {
+  if (videoPlayer.value) {
+    const currentTime = videoPlayer.value.currentTime;
+
+    // Show logos in 11s and 26s
+    if (currentTime >= 11 && currentTime < 26) {
+      showNav.value = true;
+    } else {
+      showNav.value = false;
+    }
+
+    // Continue monitoring
+    animationFrameId = requestAnimationFrame(monitorVideoTime);
+  }
+}
+
+// Load counters and play video is mounted
+onMounted(() => {
+  loadCounters();
+  playVideo();
+});
+
+// Stop monitoring when the component is unmounted
+onUnmounted(() => {
+  cancelAnimationFrame(animationFrameId);
+});
 </script>
 
 <style scoped>
