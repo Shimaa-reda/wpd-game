@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Day from '../views/Day.vue'
-import LastDay from '../views/LastDay.vue'
 
 const routes = [
   {
@@ -13,14 +11,14 @@ const routes = [
   {
     path: '/day',
     name: 'day',
-    component: () => Day,
+    component: () => import('../views/Day.vue'),
     meta:{title:"WPD Game"}
   },
   ,
   {
     path: '/last_day',
     name: 'lastday',
-    component: () => LastDay,
+    component: () => import ('../views/LastDay.vue'),
     meta:{title:"WPD Game"}
   },
 ];
