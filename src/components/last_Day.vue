@@ -15,7 +15,10 @@
       style="z-index:1000"
     />
     
-    <video ref="videoPlayer" autoplay loop muted playsinline @canplaythrough="playVideo" @ended="resetVideo">
+    <video ref="videoPlayer" autoplay loop :muted="isMuted" 
+      width="500" 
+      height="300" 
+      playsinline @canplaythrough="playVideo" @ended="resetVideo">
       <source src="@/assets/images/Synagis - WPD Activation.mp4" type="video/mp4" />
       Your browser does not support the video tag.
     </video>
@@ -39,6 +42,14 @@
       </div>
     </div>
   </div>
+  <!-- Mute/Unmute Control -->
+    <div 
+      id="audio-control" 
+      class="audio-control" 
+      @click="toggleMute"
+    >
+      {{ isMuted ? 'Unmute' : 'Mute' }}
+    </div>
 </template>
 
 <script setup>
@@ -99,6 +110,19 @@ onMounted(() => {
 onUnmounted(() => {
   cancelAnimationFrame(animationFrameId);
 });
+// State to track mute status
+const isMuted = ref(true);
+
+// Function to toggle mute status
+const toggleMute = () => {
+  isMuted.value = !isMuted.value;
+  
+  // Get video element and update its muted property
+  const videoElement = refs.myVideo;
+  if (videoElement) {
+    videoElement.muted = isMuted.value;
+  }
+};
 </script>
 
 <style scoped>
@@ -168,7 +192,24 @@ video {
 .bottom-right-logo {
   position: absolute;
   bottom: 15px;
-  right: 50px;
+  right: 30px;
   height: 50px;
+}
+.audio-control {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #005590; 
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s;
+  position: absolute;
+  left: 40px ;
+  bottom: 10px;
+}
+
+.audio-control:hover {
+  background-color: #004080; 
 }
 </style>
