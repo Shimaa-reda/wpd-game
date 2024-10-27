@@ -90,7 +90,6 @@ const showFact = ref(false);
 const currentFact = ref({});
 let idleTimeout = null; // Holds the idle timeout reference
 
-// console.log("idel",idleTimeout)
 const originalFacts = [
   {
     id: 1,
@@ -173,14 +172,12 @@ const usedFacts = ref([]);
 onMounted(() => {
   
   loadCounts();
-  console.log("idel onmounted",idleTimeout)
   resetIdleTimer();
   
   const body = document.body;
   const date = new Date("29 October 2024");
   const day = date.getDate();
   const month = date.getMonth() + 1; // getMonth() returns 0-11
-  console.log("day",day,"month",month);
 
   let backgroundImage = '';
 
@@ -203,7 +200,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  console.log("idel onunmounted",idleTimeout)
   clearTimeout(idleTimeout);
 });
 function showRandomFact() {
