@@ -407,6 +407,7 @@ body {
 .modal-body p {
   font-size: 1rem;
   color: #333;
+  padding:20px !important;
 }
 
 .modal-button {
@@ -420,6 +421,7 @@ body {
   font-weight: bold;
   color: #333;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); 
+  margin-bottom: 50px;
 }
 
 .modal-button:hover {
