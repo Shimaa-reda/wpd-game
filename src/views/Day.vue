@@ -196,6 +196,9 @@ onMounted(() => {
     
     router.push({ name: 'lastday' });
   }
+   else {
+    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
+  }
 
   body.style.backgroundImage = `url(${backgroundImage})`;
 });
