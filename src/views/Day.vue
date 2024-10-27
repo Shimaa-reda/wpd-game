@@ -153,7 +153,7 @@ const originalFacts = [
   {
     id: 8,
     text: "Mothers report <strong>significantly lower stress levels</strong> during <strong>Kangaroo Care</strong> compared to when the baby is receiving conventional care.<sup>1</sup>",
-    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at :https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants.. Last accessed: October 2024.",
+    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at: https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants. Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
