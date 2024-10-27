@@ -175,7 +175,8 @@ onMounted(() => {
   resetIdleTimer();
   
   const body = document.body;
-  const date = new Date("29 October 2024");
+  // const date = new Date("29 October 2024");
+  const date = new Date("");
   const day = date.getDate();
   const month = date.getMonth() + 1; // getMonth() returns 0-11
 
