@@ -6,8 +6,8 @@
     </nav>
     
     <div v-if="showFact" class="ref container" style="z-index:2100">
-        <p style="color:red" v-if="currentFact.rsv">RSV Info: {{ currentFact.rsv }}</p>
-        <p style="color:red" v-if="currentFact.nicu">NICU Info: {{ currentFact.nicu }}</p>
+        <p style="color:red" v-if="currentFact.rsv">{{ currentFact.rsv }}</p>
+        <p style="color:red" v-if="currentFact.nicu">{{ currentFact.nicu }}</p>
         <p style="color:red" v-if="currentFact.reference">{{ currentFact.reference }}</p>
     </div>
     
@@ -68,7 +68,7 @@
               <p v-html="currentFact.text">
                 
               </p>
-              <button class="modal-button">Wrap Up Your Care – Now You Know More!</button>
+              <button class="modal-button" @click="closeModal">Wrap Up Your Care – Now You Know More!</button>
             </div>
           </div>
   
@@ -123,9 +123,9 @@ const originalFacts = [
   {
     id: 5,
     text: `
-      <div>
+      <div style="text-align:left;">
         Important steps help to reduce the risk of preterm birth:<sup>1</sup>
-        <ul style="list-style-type: disc; padding-left: 80px; text-align:left">
+        <ul style="list-style-type: disc;   margin-bottom:-20px">
           <li style="margin-top: 10px;">Quit smoking and avoid alcohol.</li>
           <li>Get prenatal care early and throughout pregnancy.</li>
           <li>Seek medical attention for any signs or symptoms of preterm labor.</li>
@@ -154,7 +154,7 @@ const originalFacts = [
   {
     id: 8,
     text: "Mothers report <strong>significantly lower stress levels</strong> during <strong>Kangaroo Care</strong> compared to when the baby is receiving conventional care.<sup>1</sup>",
-    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at:https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants.. Last accessed: October 2024.",
+    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at :https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants.. Last accessed: October 2024.",
     rsv: "",
     nicu: ""
   },
@@ -170,6 +170,39 @@ const originalFacts = [
 const facts = ref([...originalFacts]); // Initialize facts with the original list
 const usedFacts = ref([]);
 
+
+// Set up idle timer on mount and clear on unmount
+onMounted(() => {
+  
+  loadCounts();
+  console.log("idel onmounted",idleTimeout)
+  resetIdleTimer();
+  
+  const body = document.body;
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+
+  let backgroundImage = '';
+
+  // Define your background images based on day and month
+  if (month === 10 && day === 27) {
+    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
+  } else if (month === 10 && day === 30) {
+    backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
+  } else if (month === 10 && day === 31) {
+    backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
+  } else if (month === 11 && day === 1) {
+   router.push({ name: 'lastday' });
+  }
+
+  body.style.backgroundImage = `url(${backgroundImage})`;
+});
+
+onUnmounted(() => {
+  console.log("idel onunmounted",idleTimeout)
+  clearTimeout(idleTimeout);
+});
 function showRandomFact() {
   if (facts.value.length > 0) {
     let randomIndex;
@@ -189,18 +222,6 @@ function showRandomFact() {
     facts.value = [...originalFacts]; // Reset facts
   }
 }
-
-// Set up idle timer on mount and clear on unmount
-onMounted(() => {
-  loadCounts();
-  console.log("idel onmounted",idleTimeout)
-  resetIdleTimer();
-});
-
-onUnmounted(() => {
-  console.log("idel onunmounted",idleTimeout)
-  clearTimeout(idleTimeout);
-});
 
 function loadCounts() {
   loveCount.value = Number(localStorage.getItem('loveCount')) || 0;
@@ -252,6 +273,8 @@ function closeModal() {
   showFact.value = false;
   currentFact.value = {};
 }
+// Set the background image based on the current date
+
 </script>
 
 <style>
@@ -259,7 +282,7 @@ function closeModal() {
 body {
   position: relative;
   margin: 0;
-  background-image: url('@/assets/images/day1.png');
+  /* background-image: url('@/assets/images/day1.png'); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -411,7 +434,7 @@ body {
 }
 
 .modal-button {
-  margin-top: 20px;
+ 
   padding: 10px 20px;
   background-color: #f2f2f2;
   border: none;
@@ -488,12 +511,7 @@ body {
   background-color: #6ad042;
 }
 
-p {
-  font-size: 30px;
-  color: white;
-  margin: 0;
-  margin-bottom: 20px;
-}
+
 
 .ref {
   position: absolute; 
@@ -501,14 +519,15 @@ p {
   left: 80px; 
   z-index: 2100; 
   text-align: left;
+  width: 1200px;
  
   
 }
 
 .ref p{
-    font-size: 18px;
+    font-size: 17px;
     color: white !important;
-    font-weight: bold;
+    
 }
 
 /* desktop */

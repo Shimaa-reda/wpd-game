@@ -9,7 +9,7 @@
     <div class="content">
       <img src="@/assets/images/Synagis-GIF.gif" alt="Video Part" class="video-image" />
       <!-- Button  -->
-      <button class="care-button" @click="navigateToDay">Deliver Your Care</button>
+      <button class="care-button" @click="navigateToDay"><img src="@/assets/images/cursor.png" alt="" style="width:25px; align-items:center"> Deliver Your Care</button>
     </div>
     
     
@@ -78,15 +78,15 @@ body {
 .care-button {
   background-color: #E44096;
   color: white;
-  padding: 10px ;
+  padding: 12px ;
   border: none;
   border-radius: 40px;
   font-size: 16px;
   cursor: pointer;
-  width: 200px;
+  width: 220px;
   position: absolute;
   right: 200px;
-  bottom: 100px;
+  bottom: 80px;
 }
 
 .care-button:hover {
