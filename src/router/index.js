@@ -14,12 +14,15 @@ const routes = [
     meta:{title:"WPD Game"}
     
   },
-  // {
-  //   path: '/score',
-  //   name: 'score',
-  //   component: () => import('../components/Score.vue'),
-  //   meta:{title:"Score"}
-  // }
+  ,
+  {
+    path: '/last_day',
+    name: 'lastday',
+    component: () => import('../components/last_Day.vue'),
+    meta:{title:"WPD Game"}
+    
+  },
+ 
 ];
 
 const router = createRouter({

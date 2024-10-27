@@ -7,7 +7,7 @@
     
     <!-- Image centered vertically and aligned to the right -->
     <div class="content">
-      <img src="@/assets/images/part_of_video.png" alt="Video Part" class="video-image" />
+      <img src="@/assets/images/Synagis-GIF.gif" alt="Video Part" class="video-image" />
       <!-- Button  -->
       <button class="care-button" @click="navigateToDay">Deliver Your Care</button>
     </div>
@@ -70,7 +70,7 @@ body {
 }
 
 .video-image {
-  width: 1000px; 
+  width: auto; 
   margin-bottom: 20px; 
 }
 
