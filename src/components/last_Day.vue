@@ -198,7 +198,7 @@ video {
 .audio-control {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #005590; 
+  background-color: #99176e; 
   color: white;
   cursor: pointer;
   border-radius: 5px;
@@ -210,6 +210,6 @@ video {
 }
 
 .audio-control:hover {
-  background-color: #004080; 
+  background-color: #99176e; 
 }
 </style>
