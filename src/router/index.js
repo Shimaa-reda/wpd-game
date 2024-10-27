@@ -1,28 +1,28 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+import Day from '../views/Day.vue'
+import LastDay from '../views/LastDay.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('../views/HomeView.vue'),
+    component: Home,
     meta:{title:"WPD Game"}
   },
   {
     path: '/day',
     name: 'day',
-    component: () => import('../components/day.vue'),
+    component: () => Day,
     meta:{title:"WPD Game"}
-    
   },
   ,
   {
     path: '/last_day',
     name: 'lastday',
-    component: () => import('../components/last_Day.vue'),
+    component: () => LastDay,
     meta:{title:"WPD Game"}
-    
   },
- 
 ];
 
 const router = createRouter({
