@@ -85,8 +85,8 @@ body {
   cursor: pointer;
   width: 220px;
   position: absolute;
-  right: 200px;
-  bottom: 80px;
+  right: 267px;
+  bottom: 88px;
 }
 
 .care-button:hover {
