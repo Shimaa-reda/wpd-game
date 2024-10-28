@@ -27,6 +27,12 @@ const routes = [
     component: () => import ('../views/Clear.vue'),
     meta:{title:"WPD Game"}
   },
+  {
+    path: '/control_panel',
+    name: 'controlPanel',
+    component: () => import ('../views/ControlPanel.vue'),
+    meta:{title:"WPD Game"}
+  },
 ];
 
 const router = createRouter({

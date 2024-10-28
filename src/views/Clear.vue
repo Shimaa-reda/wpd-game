@@ -24,6 +24,8 @@ const clear = () => {
   localStorage.removeItem('careCount');
   localStorage.removeItem('wishCount');
   localStorage.removeItem('usedFacts');
+  localStorage.removeItem('selectedOption');
+
 
   // Set success message
   message.value = 'Data cleared successfully, back to home.';

@@ -183,10 +183,8 @@ onMounted(() => {
   loadUsedFacts();
   resetIdleTimer();
   
-  cycleBackgroundImages();
-  
-
-  
+  // cycleBackgroundImages();
+  controlPanel();
 });
 
 onUnmounted(() => {
@@ -291,6 +289,33 @@ function incrementCount(type) {
       showRandomFact();
     }
   }
+}
+function controlPanel()
+{
+  console.log("selected:", localStorage.getItem('selectedOption'));
+let backgroundImage = '';
+const body = document.body; // Define the body variable
+
+// Define your background images based on day and month
+if (localStorage.getItem('selectedOption') === 'baby1') {
+    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
+    console.log('First Day');
+} else if (localStorage.getItem('selectedOption') === 'baby2') {
+    backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
+    console.log('Second Day');
+} else if (localStorage.getItem('selectedOption') === 'baby3') {
+    backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
+    console.log('Third Day');
+} else if (localStorage.getItem('selectedOption') === 'video') {
+    console.log('Fourth Day');
+    router.push({ name: 'lastday' });
+}
+
+// Set the background image if one was selected
+if (backgroundImage) {
+    body.style.backgroundImage = `url(${backgroundImage})`;
+}
+
 }
 function closeModal() {
   showFact.value = false;
