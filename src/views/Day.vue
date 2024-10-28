@@ -32,10 +32,10 @@
           <div class="line" :class="{ active: progressStep >= 2 }"></div>
           <div class="step" :class="{ checked: progressStep >= 3 }"></div>
           <div class="line" :class="{ active: progressStep >= 3 }"></div>
-          <div class="step" :class="{ checked: progressStep >= 4 }"></div>
+          <!-- <div class="step" :class="{ checked: progressStep >= 4 }"></div>
           <div class="line" :class="{ active: progressStep >= 4 }"></div>
           <div class="step" :class="{ checked: progressStep === 5 }"></div>
-          <div class="line" :class="{ active: progressStep >= 5 }"></div>
+          <div class="line" :class="{ active: progressStep >= 5 }"></div> -->
         </div>
 
         <p>
@@ -260,13 +260,13 @@ function sendWish() {
 function incrementCount(type) {
   resetIdleTimer(); // Reset the idle timer on any button click
 
-  if (progressStep.value < 5) {
+  if (progressStep.value < 3) {
     progressStep.value += 1;
     if (type === 'love') loveCount.value += 1;
     if (type === 'care') careCount.value += 1;
     if (type === 'wish') wishCount.value += 1;
     
-    if (progressStep.value === 5) {
+    if (progressStep.value === 3) {
       showRandomFact();
     }
   }
