@@ -54,6 +54,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router'; // Import the useRouter function
 
 const loveCount = ref(0);
 const careCount = ref(0);
@@ -61,6 +62,7 @@ const wishCount = ref(0);
 const videoPlayer = ref(null);
 const showNav = ref(false);
 let animationFrameId;
+const router = useRouter(); // Initialize the router
 
 // Function to read counters from local storage
 function loadCounters() {
@@ -74,6 +76,7 @@ function playVideo() {
   if (videoPlayer.value) {
     videoPlayer.value.play();
     monitorVideoTime(); // Start monitoring video time
+    redirectToDayPage(); // Start the redirection timer
   }
 }
 
@@ -100,7 +103,14 @@ function monitorVideoTime() {
   }
 }
 
-// Load counters and play video is mounted
+// Function to redirect to the Day page
+function redirectToDayPage() {
+  setTimeout(() => {
+    router.push('/day'); // Change '/day' to your actual route
+  }, 900000 ); // Redirect after 15 minutes
+}
+
+// Load counters and play video if mounted
 onMounted(() => {
   loadCounters();
   playVideo();
@@ -110,15 +120,16 @@ onMounted(() => {
 onUnmounted(() => {
   cancelAnimationFrame(animationFrameId);
 });
+
 // State to track mute status
 const isMuted = ref(true);
 
 // Function to toggle mute status
 const toggleMute = () => {
   isMuted.value = !isMuted.value;
-  
+
   // Get video element and update its muted property
-  const videoElement = refs.myVideo;
+  const videoElement = videoPlayer.value;
   if (videoElement) {
     videoElement.muted = isMuted.value;
   }
@@ -205,7 +216,7 @@ video {
   text-align: center;
   transition: background-color 0.3s;
   position: absolute;
-  left: 40px ;
+  left: 40px;
   bottom: 10px;
 }
 

@@ -165,7 +165,15 @@ const originalFacts = [
     nicu: "NICU: Neonatal intensive care unit."
   }
 ];
+let backgroundInterval = null;
 
+const backgroundImages = [
+  new URL('@/assets/images/day1.png', import.meta.url).href,
+  new URL('@/assets/images/day2.png', import.meta.url).href,
+  new URL('@/assets/images/day3.png', import.meta.url).href,
+  new URL('@/assets/images/Synagis - WPD Activation.mp4', import.meta.url).href // Note: Ensure this format is handled if it's a video
+];
+let currentImageIndex = 0;
 const facts = ref([...originalFacts]);
 const usedFacts = ref([]);
 
@@ -174,34 +182,41 @@ onMounted(() => {
   loadCounts();
   loadUsedFacts();
   resetIdleTimer();
+  
+  cycleBackgroundImages();
+  
 
-  const body = document.body;
-  const date = new Date();
-  const day = date.getDate();
-  const month = date.getMonth() + 1; // getMonth() returns 0-11
-
-  let backgroundImage = '';
-
-  // Define your background images based on day and month
-  if (month === 10 && day === 29) {
-    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-  } else if (month === 10 && day === 30) {
-    backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
-  } else if (month === 10 && day === 31) {
-    backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
-  } else if (month === 11 && day === 1) {
-    router.push({ name: 'lastday' });
-  } else {
-    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-  }
-
-  body.style.backgroundImage = `url(${backgroundImage})`;
+  
 });
 
 onUnmounted(() => {
   clearTimeout(idleTimeout);
+ 
+  clearInterval(backgroundInterval);
 });
+function cycleBackgroundImages() {
+  setBackgroundImage();
+  backgroundInterval = setInterval(() => {
+    currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+    setBackgroundImage();
+  },  900000); // Change to every 15 mins
+}
 
+function setBackgroundImage() {
+  if(currentImageIndex === backgroundImages.length - 1)
+  {
+     router.push({ name: 'lastday' });
+     
+     
+     
+  }
+  document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
+}
+
+function resetIdleTimer() {
+  clearTimeout(idleTimeout);
+  
+}
 function showRandomFact() {
   if (facts.value.length > 0) {
     let randomIndex;
@@ -249,12 +264,7 @@ watch([loveCount, careCount, wishCount], ([newLove, newCare, newWish]) => {
   localStorage.setItem('wishCount', newWish);
 });
 
-function resetIdleTimer() {
-  clearTimeout(idleTimeout);
-  idleTimeout = setTimeout(() => {
-    router.push({ name: 'home' }); // Redirect to the home page after 2 mins
-  }, 120000); // 2 minutes
-}
+
 
 function sendLove() {
   incrementCount('love');
