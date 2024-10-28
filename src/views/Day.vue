@@ -25,18 +25,18 @@
       </div>
 
       <div class="bottom-center">
-        <div class="step-slider">
+        <!-- <div class="step-slider">
           <div class="step" :class="{ checked: progressStep >= 1 }"></div>
           <div class="line" :class="{ active: progressStep >= 1 }"></div>
           <div class="step" :class="{ checked: progressStep >= 2 }"></div>
           <div class="line" :class="{ active: progressStep >= 2 }"></div>
           <div class="step" :class="{ checked: progressStep >= 3 }"></div>
           <div class="line" :class="{ active: progressStep >= 3 }"></div>
-          <!-- <div class="step" :class="{ checked: progressStep >= 4 }"></div>
+          <div class="step" :class="{ checked: progressStep >= 4 }"></div>
           <div class="line" :class="{ active: progressStep >= 4 }"></div>
           <div class="step" :class="{ checked: progressStep === 5 }"></div>
-          <div class="line" :class="{ active: progressStep >= 5 }"></div> -->
-        </div>
+          <div class="line" :class="{ active: progressStep >= 5 }"></div>
+        </div> -->
 
         <p>
           <img src="@/assets/images/cursor.png" alt="" style="width:25px; align-items:center"> Tap to show some love to the baby
@@ -166,17 +166,17 @@ const originalFacts = [
   }
 ];
 
-const facts = ref([...originalFacts]); // Initialize facts with the original list
+const facts = ref([...originalFacts]);
 const usedFacts = ref([]);
+
 // Set up idle timer on mount and clear on unmount
 onMounted(() => {
-  
   loadCounts();
+  loadUsedFacts();
   resetIdleTimer();
-  
+
   const body = document.body;
-  // const date = new Date("29 October 2024");
-  const date = new Date("");
+  const date = new Date();
   const day = date.getDate();
   const month = date.getMonth() + 1; // getMonth() returns 0-11
 
@@ -185,18 +185,13 @@ onMounted(() => {
   // Define your background images based on day and month
   if (month === 10 && day === 29) {
     backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-   
   } else if (month === 10 && day === 30) {
     backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
-   
   } else if (month === 10 && day === 31) {
     backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
-    
   } else if (month === 11 && day === 1) {
-    
     router.push({ name: 'lastday' });
-  }
-   else {
+  } else {
     backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
   }
 
@@ -206,23 +201,26 @@ onMounted(() => {
 onUnmounted(() => {
   clearTimeout(idleTimeout);
 });
+
 function showRandomFact() {
   if (facts.value.length > 0) {
     let randomIndex;
     do {
       randomIndex = Math.floor(Math.random() * facts.value.length);
-    } while (usedFacts.value.includes(randomIndex));
-    
+    } while (usedFacts.value.includes(randomIndex) && usedFacts.value.length < facts.value.length);
+
     currentFact.value = facts.value[randomIndex];
     usedFacts.value.push(randomIndex);
     showFact.value = true;
-    progressStep.value = 0;
+    saveUsedFacts(); // Save usedFacts to localStorage
+    console.log('used fact: ', usedFacts.value);
   }
-  
+
   // Reset facts and usedFacts once all facts have been shown
   if (usedFacts.value.length === facts.value.length) {
     usedFacts.value = [];
     facts.value = [...originalFacts]; // Reset facts
+    saveUsedFacts(); // Save reset usedFacts to localStorage
   }
 }
 
@@ -232,12 +230,25 @@ function loadCounts() {
   wishCount.value = Number(localStorage.getItem('wishCount')) || 0;
   progressStep.value = 0;
 }
+
+function loadUsedFacts() {
+  const storedUsedFacts = localStorage.getItem('usedFacts');
+  if (storedUsedFacts) {
+    usedFacts.value = JSON.parse(storedUsedFacts);
+  }
+}
+
+function saveUsedFacts() {
+  localStorage.setItem('usedFacts', JSON.stringify(usedFacts.value));
+}
+
 // Watchers to store the values in localStorage when they change
 watch([loveCount, careCount, wishCount], ([newLove, newCare, newWish]) => {
   localStorage.setItem('loveCount', newLove);
   localStorage.setItem('careCount', newCare);
   localStorage.setItem('wishCount', newWish);
 });
+
 function resetIdleTimer() {
   clearTimeout(idleTimeout);
   idleTimeout = setTimeout(() => {
@@ -260,21 +271,21 @@ function sendWish() {
 function incrementCount(type) {
   resetIdleTimer(); // Reset the idle timer on any button click
 
-  if (progressStep.value < 3) {
+  if (progressStep.value < 1) {
     progressStep.value += 1;
     if (type === 'love') loveCount.value += 1;
     if (type === 'care') careCount.value += 1;
     if (type === 'wish') wishCount.value += 1;
-    
-    if (progressStep.value === 3) {
+
+    if (progressStep.value === 1) {
       showRandomFact();
     }
   }
 }
-
 function closeModal() {
   showFact.value = false;
   currentFact.value = {};
+  router.push({ name: 'home' });
 }
 // Set the background image based on the current date
 

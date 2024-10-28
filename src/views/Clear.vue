@@ -23,6 +23,7 @@ const clear = () => {
   localStorage.removeItem('loveCount');
   localStorage.removeItem('careCount');
   localStorage.removeItem('wishCount');
+  localStorage.removeItem('usedFacts');
 
   // Set success message
   message.value = 'Data cleared successfully, back to home.';
