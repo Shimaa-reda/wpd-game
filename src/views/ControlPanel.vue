@@ -14,17 +14,17 @@
       </select>
 
       <button @click="saveOption" class="save-button">Save Option</button>
-      <p v-if="message" class="message">{{ message }}</p>
+      <p v-if="message" :class="{'success-message': isSuccess, 'error-message': !isSuccess}">{{ message }}</p>
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'; 
 
 const selectedOption = ref(''); 
 const message = ref(''); 
+const isSuccess = ref(false); // Flag to determine if the message is success or error
 const router = useRouter();
 
 const saveOption = () => {
@@ -32,16 +32,28 @@ const saveOption = () => {
     // Save selected option to localStorage
     localStorage.setItem('selectedOption', selectedOption.value);
     message.value = 'Option saved successfully!'; 
-    
+    isSuccess.value = true; // Set to true for success message
     
     router.push({ name: 'day' });
   } else {
     message.value = 'Please select an option.'; 
+    isSuccess.value = false; // Set to false for error message
   }
 };
 </script>
 
+
 <style scoped>
+.success-message {
+  margin-top: 20px; 
+  color: #28a745; /* Green color for success */
+}
+
+.error-message {
+  margin-top: 20px; 
+  color: red; /* Red color for error */
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -65,7 +77,7 @@ h2 {
 
 .save-button {
   padding: 10px 20px; 
-  background-color: #007bff; 
+  background-color: #99176e; 
   color: white; 
   border: none; 
   border-radius: 4px; 
@@ -74,7 +86,7 @@ h2 {
 }
 
 .save-button:hover {
-  background-color: #0056b3; 
+  background-color: #99176e; 
 }
 
 .message {

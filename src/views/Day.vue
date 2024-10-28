@@ -165,15 +165,15 @@ const originalFacts = [
     nicu: "NICU: Neonatal intensive care unit."
   }
 ];
-let backgroundInterval = null;
+// let backgroundInterval = null;
 
-const backgroundImages = [
-  new URL('@/assets/images/day1.png', import.meta.url).href,
-  new URL('@/assets/images/day2.png', import.meta.url).href,
-  new URL('@/assets/images/day3.png', import.meta.url).href,
-  new URL('@/assets/images/Synagis - WPD Activation.mp4', import.meta.url).href // Note: Ensure this format is handled if it's a video
-];
-let currentImageIndex = 0;
+// const backgroundImages = [
+//   new URL('@/assets/images/day1.png', import.meta.url).href,
+//   new URL('@/assets/images/day2.png', import.meta.url).href,
+//   new URL('@/assets/images/day3.png', import.meta.url).href,
+//   new URL('@/assets/images/Synagis - WPD Activation.mp4', import.meta.url).href // Note: Ensure this format is handled if it's a video
+// ];
+// let currentImageIndex = 0;
 const facts = ref([...originalFacts]);
 const usedFacts = ref([]);
 
@@ -183,33 +183,33 @@ onMounted(() => {
   loadUsedFacts();
   resetIdleTimer();
   
-  cycleBackgroundImages();
-  // controlPanel();
+ //cycleBackgroundImages();
+  controlPanel();
 });
 
 onUnmounted(() => {
   clearTimeout(idleTimeout);
  
-  clearInterval(backgroundInterval);
+  // clearInterval(backgroundInterval);
 });
-function cycleBackgroundImages() {
-  setBackgroundImage();
-  backgroundInterval = setInterval(() => {
-    currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
-    setBackgroundImage();
-  },  900000); // Change to every 15 mins
-}
+// function cycleBackgroundImages() {
+//   setBackgroundImage();
+//   backgroundInterval = setInterval(() => {
+//     currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+//     setBackgroundImage();
+//   },  900000); // Change to every 15 mins
+// }
 
-function setBackgroundImage() {
-  if(currentImageIndex === backgroundImages.length - 1)
-  {
-     router.push({ name: 'lastday' });
+// function setBackgroundImage() {
+//   if(currentImageIndex === backgroundImages.length - 1)
+//   {
+//      router.push({ name: 'lastday' });
      
      
      
-  }
-  document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
-}
+//   }
+//   document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
+// }
 
 function resetIdleTimer() {
   clearTimeout(idleTimeout);
