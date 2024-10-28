@@ -34,7 +34,7 @@ const saveOption = () => {
     message.value = 'Option saved successfully!'; 
     isSuccess.value = true; // Set to true for success message
     
-    router.push({ name: 'day' });
+    // router.push({ name: 'day' });
   } else {
     message.value = 'Please select an option.'; 
     isSuccess.value = false; // Set to false for error message
