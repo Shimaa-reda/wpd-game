@@ -183,8 +183,8 @@ onMounted(() => {
   loadUsedFacts();
   resetIdleTimer();
   
-  // cycleBackgroundImages();
-  controlPanel();
+  cycleBackgroundImages();
+  // controlPanel();
 });
 
 onUnmounted(() => {
