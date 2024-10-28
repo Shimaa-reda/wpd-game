@@ -310,6 +310,12 @@ if (localStorage.getItem('selectedOption') === 'baby1') {
     console.log('Fourth Day');
     router.push({ name: 'lastday' });
 }
+else
+{
+  backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
+    console.log('default');
+
+}
 
 // Set the background image if one was selected
 if (backgroundImage) {
