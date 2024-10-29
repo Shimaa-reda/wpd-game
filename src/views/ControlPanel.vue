@@ -31,6 +31,7 @@ const saveOption = () => {
   if (selectedOption.value) {
     // Save selected option to localStorage
     localStorage.setItem('selectedOption', selectedOption.value);
+    
     message.value = 'Option saved successfully!'; 
     isSuccess.value = true; // Set to true for success message
     

@@ -1,31 +1,63 @@
 <template>
   <div class="background-container">
-    <nav v-if="showFact" class="navbar" style="z-index:2000">
-      <img src="@/assets/images/logo_white.png" alt="Left Logo" class="left-logo" style="width:150px" />
-      <img src="@/assets/images/care_white.png" alt="Right Logo" class="right-logo" style="width:150px" />
+    <nav v-if="showFact" class="navbar" style="z-index: 2000">
+      <img
+        src="@/assets/images/logo_white.png"
+        alt="Left Logo"
+        class="left-logo"
+        style="width: 150px"
+      />
+      <img
+        src="@/assets/images/care_white.png"
+        alt="Right Logo"
+        class="right-logo"
+        style="width: 150px"
+      />
     </nav>
-    
-    <div v-if="showFact" class="ref container" style="z-index:2100">
-        <p style="color:red" v-if="currentFact.rsv">{{ currentFact.rsv }}</p>
-        <p style="color:red" v-if="currentFact.nicu">{{ currentFact.nicu }}</p>
-        <p style="color:red" v-if="currentFact.reference">{{ currentFact.reference }}</p>
+
+    <div v-if="showFact" class="ref container" style="z-index: 2100">
+      <p style="color: red" v-if="currentFact.rsv">{{ currentFact.rsv }}</p>
+      <p style="color: red" v-if="currentFact.nicu">{{ currentFact.nicu }}</p>
+      <p style="color: red" v-if="currentFact.reference">
+        {{ currentFact.reference }}
+      </p>
     </div>
-    
+
     <div class="content">
       <div class="top-right">
         <div class="counter">
-          <span><img src="@/assets/images/love.png" alt="" style="width:25px; align-items:center"> {{ loveCount }} Love</span>
+          <span
+            ><img
+              src="@/assets/images/love.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            {{ loveCount }} Love</span
+          >
         </div>
         <div class="counter">
-          <span><img src="@/assets/images/care.png" alt="" style="width:25px; align-items:center"> {{ careCount }} Care</span>
+          <span
+            ><img
+              src="@/assets/images/care.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            {{ careCount }} Care</span
+          >
         </div>
         <div class="counter">
-          <span><img src="@/assets/images/wish.png" alt="" style="width:25px; align-items:center"> {{ wishCount }} Wishes</span>
+          <span
+            ><img
+              src="@/assets/images/wish.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            {{ wishCount }} Wishes</span
+          >
         </div>
       </div>
-
-      <div class="bottom-center">
-        <!-- <div class="step-slider">
+      <div class="bar">
+        <div class="step-slider">
           <div class="step" :class="{ checked: progressStep >= 1 }"></div>
           <div class="line" :class="{ active: progressStep >= 1 }"></div>
           <div class="step" :class="{ checked: progressStep >= 2 }"></div>
@@ -36,16 +68,44 @@
           <div class="line" :class="{ active: progressStep >= 4 }"></div>
           <div class="step" :class="{ checked: progressStep === 5 }"></div>
           <div class="line" :class="{ active: progressStep >= 5 }"></div>
-        </div> -->
+        </div>
+      </div>
 
+      <div class="bottom-center">
         <p>
-          <img src="@/assets/images/cursor.png" alt="" style="width:25px; align-items:center"> Tap to show some love to the baby
+          <img
+            src="@/assets/images/cursor.png"
+            alt=""
+            style="width: 25px; align-items: center"
+          />
+          Tap to show some love to the baby
         </p>
 
         <div class="actions">
-          <button class="action-btn" @click="sendLove"><img src="@/assets/images/love.png" alt="" style="width:25px; align-items:center"> Send Love</button>
-          <button class="action-btn" @click="sendCare"><img src="@/assets/images/care.png" alt="" style="width:25px; align-items:center"> Send Care</button>
-          <button class="action-btn" @click="sendWish"><img src="@/assets/images/wish.png" alt="" style="width:25px; align-items:center"> Send a Wish</button>
+          <button class="action-btn" @click="sendLove">
+            <img
+              src="@/assets/images/love.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            Send Love
+          </button>
+          <button class="action-btn" @click="sendCare">
+            <img
+              src="@/assets/images/care.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            Send Care
+          </button>
+          <button class="action-btn" @click="sendWish">
+            <img
+              src="@/assets/images/wish.png"
+              alt=""
+              style="width: 25px; align-items: center"
+            />
+            Send a Wish
+          </button>
         </div>
       </div>
 
@@ -58,28 +118,27 @@
       </div> -->
 
       <div v-if="showFact" class="modal-overlay">
-          <div class="modal-content">
-            <button class="close-btn" @click="closeModal">×</button>
-            <h2 class="modal-title">
-              Thank you for being part of the chain of care! <br />
-              Here are some important facts.
-            </h2>
-            <div class="modal-body">
-              <p v-html="currentFact.text">
-                
-              </p>
-              <button class="modal-button" @click="closeModal">Wrap Up Your Care – Now You Know More!</button>
-            </div>
+        <div class="modal-content">
+          <button class="close-btn" @click="closeModal">×</button>
+          <h2 class="modal-title">
+            Thank you for being part of the chain of care! <br />
+            Here are some important facts.
+          </h2>
+          <div class="modal-body">
+            <p v-html="currentFact.text"></p>
+            <button class="modal-button" @click="closeModal">
+              Wrap Up Your Care – Now You Know More!
+            </button>
           </div>
-  
-       </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onUnmounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted, watch, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const loveCount = ref(0);
@@ -94,30 +153,34 @@ const originalFacts = [
   {
     id: 1,
     text: "World Prematurity Day aims to raise awareness of premature birth and the challenges that women and babies may face.<sup>1</sup>",
-    reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
+    reference:
+      "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 2,
     text: "Globally, <strong>15 million</strong> preterm births are estimated every year.<sup>1</sup>",
-    reference: "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
+    reference:
+      "Reference: 1. UNICEF. World Prematurity Day 2023. Available at: https://www.unicef.org/vietnam/press-releases/world-prematurity-day-2023 . Last accessed: October 2024.",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 3,
     text: "Preterm birth is the leading cause of child deaths, accounting for <strong>more than 1 in 5 of all deaths</strong> of children occurring before their fifth birthday.<sup>1</sup>",
-    reference: "Reference: 1. UNICEF. 150 million babies born preterm in the last decade. Available at: https://www.unicef.org/press-releases/150-million-babies-born-preterm-last-decade . Last accessed: October 2024. ",
+    reference:
+      "Reference: 1. UNICEF. 150 million babies born preterm in the last decade. Available at: https://www.unicef.org/press-releases/150-million-babies-born-preterm-last-decade . Last accessed: October 2024. ",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 4,
     text: "Preterm babies are at high risk for breathing difficulties due to their underdeveloped lungs.<sup>1</sup>",
-    reference: "Reference: 1. World Health Organization (WHO). Newborn health: Challenges facing preterm babies. Available at: https://www.who.int/news-room/questions-and-answers/item/newborn-health-challenges-facing-preterm-babies . Last accessed: October 2024. ",
+    reference:
+      "Reference: 1. World Health Organization (WHO). Newborn health: Challenges facing preterm babies. Available at: https://www.who.int/news-room/questions-and-answers/item/newborn-health-challenges-facing-preterm-babies . Last accessed: October 2024. ",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 5,
@@ -132,38 +195,43 @@ const originalFacts = [
         </ul>
       </div>
     `,
-    reference: "Reference: 1. Centers for Disease Control and Prevention (CDC). Preterm Birth. Available at: https://www.cdc.gov/maternal-infant-health/preterm-birth/index.html . Last accessed: October 2024.",
+    reference:
+      "Reference: 1. Centers for Disease Control and Prevention (CDC). Preterm Birth. Available at: https://www.cdc.gov/maternal-infant-health/preterm-birth/index.html . Last accessed: October 2024.",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 6,
     text: "Preterm babies are vulnerable to <strong>RSV-associated ALRI</strong> and severe disease because they have a less mature immune system, smaller airways, and diminished maternal antibody transfer.<sup>1</sup>",
-    reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
+    reference:
+      "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
     rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 7,
     text: "Preterm infants accounted for a <strong>quarter</strong> of RSV-associated ALRI hospitalizations in all infants.<sup>1</sup>",
-    reference: "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
+    reference:
+      "Reference: 1. Wang X, Li Y, Shi T, Bont LJ, et al. Global disease burden of and risk factors for acute lower respiratory infections caused by respiratory syncytial virus in preterm infants and young children in 2019: a systematic review and meta-analysis of aggregated and individual participant data. The Lancet. 2024;403(10433):1241-1253.",
     rsv: "RSV: Respiratory syncytial virus, ALRI: Acute lower respiratory infections.",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 8,
     text: "Mothers report <strong>significantly lower stress levels</strong> during <strong>Kangaroo Care</strong> compared to when the baby is receiving conventional care.<sup>1</sup>",
-    reference: "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at: https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants. Last accessed: October 2024.",
+    reference:
+      "Reference: 1. World Health Organization (WHO). Kangaroo mother care: a practical guide. Available at: https://www.who.int/publications/i/item/9241590351#:~:text=Kangaroo%20mother%20care%20is%20a,birth%2Dweight%20and%20preterm%20infants. Last accessed: October 2024.",
     rsv: "",
-    nicu: ""
+    nicu: "",
   },
   {
     id: 9,
     text: "For preterm babies in the NICU, <strong>the skin-to-skin contact</strong> can <strong>improve recovery time</strong> and help them leave the NICU sooner.<sup>1</sup>",
-    reference: "Reference: 1. Johns Hopkins All Children's Hospital. Kangaroo Care. Available at: https://www.hopkinsmedicine.org/all-childrens-hospital/services/maternal-fetal-neonatal-institute/neonatology/about-our-nicu/kangaroo-care . Last accessed: October 2024.",
+    reference:
+      "Reference: 1. Johns Hopkins All Children's Hospital. Kangaroo Care. Available at: https://www.hopkinsmedicine.org/all-childrens-hospital/services/maternal-fetal-neonatal-institute/neonatology/about-our-nicu/kangaroo-care . Last accessed: October 2024.",
     rsv: "",
-    nicu: "NICU: Neonatal intensive care unit."
-  }
+    nicu: "NICU: Neonatal intensive care unit.",
+  },
 ];
 // let backgroundInterval = null;
 
@@ -182,14 +250,14 @@ onMounted(() => {
   loadCounts();
   loadUsedFacts();
   resetIdleTimer();
-  
- //cycleBackgroundImages();
+
+  //cycleBackgroundImages();
   controlPanel();
 });
 
 onUnmounted(() => {
   clearTimeout(idleTimeout);
- 
+
   // clearInterval(backgroundInterval);
 });
 // function cycleBackgroundImages() {
@@ -204,29 +272,29 @@ onUnmounted(() => {
 //   if(currentImageIndex === backgroundImages.length - 1)
 //   {
 //      router.push({ name: 'lastday' });
-     
-     
-     
+
 //   }
 //   document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
 // }
 
 function resetIdleTimer() {
   clearTimeout(idleTimeout);
-  
 }
 function showRandomFact() {
   if (facts.value.length > 0) {
     let randomIndex;
     do {
       randomIndex = Math.floor(Math.random() * facts.value.length);
-    } while (usedFacts.value.includes(randomIndex) && usedFacts.value.length < facts.value.length);
+    } while (
+      usedFacts.value.includes(randomIndex) &&
+      usedFacts.value.length < facts.value.length
+    );
 
     currentFact.value = facts.value[randomIndex];
     usedFacts.value.push(randomIndex);
     showFact.value = true;
     saveUsedFacts(); // Save usedFacts to localStorage
-    console.log('used fact: ', usedFacts.value);
+    console.log("used fact: ", usedFacts.value);
   }
 
   // Reset facts and usedFacts once all facts have been shown
@@ -238,102 +306,109 @@ function showRandomFact() {
 }
 
 function loadCounts() {
-  loveCount.value = Number(localStorage.getItem('loveCount')) || 0;
-  careCount.value = Number(localStorage.getItem('careCount')) || 0;
-  wishCount.value = Number(localStorage.getItem('wishCount')) || 0;
+  loveCount.value = Number(localStorage.getItem("loveCount")) || 0;
+  careCount.value = Number(localStorage.getItem("careCount")) || 0;
+  wishCount.value = Number(localStorage.getItem("wishCount")) || 0;
   progressStep.value = 0;
 }
 
 function loadUsedFacts() {
-  const storedUsedFacts = localStorage.getItem('usedFacts');
+  const storedUsedFacts = localStorage.getItem("usedFacts");
   if (storedUsedFacts) {
     usedFacts.value = JSON.parse(storedUsedFacts);
   }
 }
 
 function saveUsedFacts() {
-  localStorage.setItem('usedFacts', JSON.stringify(usedFacts.value));
+  localStorage.setItem("usedFacts", JSON.stringify(usedFacts.value));
 }
 
 // Watchers to store the values in localStorage when they change
 watch([loveCount, careCount, wishCount], ([newLove, newCare, newWish]) => {
-  localStorage.setItem('loveCount', newLove);
-  localStorage.setItem('careCount', newCare);
-  localStorage.setItem('wishCount', newWish);
+  localStorage.setItem("loveCount", newLove);
+  localStorage.setItem("careCount", newCare);
+  localStorage.setItem("wishCount", newWish);
 });
 
-
-
 function sendLove() {
-  incrementCount('love');
+  incrementCount("love");
 }
 
 function sendCare() {
-  incrementCount('care');
+  incrementCount("care");
 }
 
 function sendWish() {
-  incrementCount('wish');
+  incrementCount("wish");
 }
 
 function incrementCount(type) {
   resetIdleTimer(); // Reset the idle timer on any button click
 
-  if (progressStep.value < 1) {
-    progressStep.value += 1;
-    if (type === 'love') loveCount.value += 1;
-    if (type === 'care') careCount.value += 1;
-    if (type === 'wish') wishCount.value += 1;
-
-    if (progressStep.value === 1) {
-      showRandomFact();
-    }
+  // if (progressStep.value <1) {
+  // progressStep.value += 1;
+  if (type === "love") {
+    loveCount.value += 1;
+    showRandomFact();
   }
-}
-function controlPanel()
-{
-  console.log("selected:", localStorage.getItem('selectedOption'));
-let backgroundImage = '';
-const body = document.body; // Define the body variable
+  if (type === "care") {
+    careCount.value += 1;
+    showRandomFact();
+  }
+  if (type === "wish") {
+    wishCount.value += 1;
+    showRandomFact();
+  }
 
-// Define your background images based on day and month
-if (localStorage.getItem('selectedOption') === 'baby1') {
-    backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-    console.log('First Day');
-} else if (localStorage.getItem('selectedOption') === 'baby2') {
-    backgroundImage = new URL('@/assets/images/day2.png', import.meta.url).href;
-    console.log('Second Day');
-} else if (localStorage.getItem('selectedOption') === 'baby3') {
-    backgroundImage = new URL('@/assets/images/day3.png', import.meta.url).href;
-    console.log('Third Day');
-} else if (localStorage.getItem('selectedOption') === 'video') {
-    console.log('Fourth Day');
-    router.push({ name: 'lastday' });
+  // if (progressStep.value > 1) {
+  //   showRandomFact();
+  // }
+  // }
 }
-else
-{
-  backgroundImage = new URL('@/assets/images/day1.png', import.meta.url).href;
-    console.log('default');
+function controlPanel() {
+  console.log("selected:", localStorage.getItem("selectedOption"));
+  let backgroundImage = "";
+  const body = document.body; // Define the body variable
 
-}
+  // Define your background images based on day and month
+  if (localStorage.getItem("selectedOption") === "baby1") {
+    progressStep.value += 1;
 
-// Set the background image if one was selected
-if (backgroundImage) {
+    backgroundImage = new URL("@/assets/images/day1.png", import.meta.url).href;
+    console.log("First Day");
+  } else if (localStorage.getItem("selectedOption") === "baby2") {
+    progressStep.value += 3;
+
+    backgroundImage = new URL("@/assets/images/day2.png", import.meta.url).href;
+    console.log("Second Day");
+  } else if (localStorage.getItem("selectedOption") === "baby3") {
+    progressStep.value += 4;
+
+    backgroundImage = new URL("@/assets/images/day3.png", import.meta.url).href;
+    console.log("Third Day");
+  } else if (localStorage.getItem("selectedOption") === "video") {
+    console.log("Fourth Day");
+    progressStep.value += 5;
+    router.push({ name: "lastday" });
+  } else {
+    backgroundImage = new URL("@/assets/images/day1.png", import.meta.url).href;
+    console.log("default");
+  }
+
+  // Set the background image if one was selected
+  if (backgroundImage) {
     body.style.backgroundImage = `url(${backgroundImage})`;
-}
-
+  }
 }
 function closeModal() {
   showFact.value = false;
   currentFact.value = {};
-  router.push({ name: 'home' });
+  router.push({ name: "home" });
 }
 // Set the background image based on the current date
-
 </script>
 
 <style>
-
 body {
   position: relative;
   margin: 0;
@@ -386,15 +461,30 @@ body {
   -webkit-backdrop-filter: blur(30px);
   display: flex;
   flex-direction: column;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
+}
+.bar {
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 550px;
+  padding: 20px;
+  border-radius: 50px 50px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 10000; */
 }
 
 .bottom-center p {
   margin-bottom: 10px;
   font-size: 30px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .actions {
@@ -413,7 +503,7 @@ body {
 }
 
 .action-btn:hover {
-  background-color: #D5D5D5;
+  background-color: #d5d5d5;
 }
 
 /* Modal styling */
@@ -431,7 +521,6 @@ body {
   -webkit-backdrop-filter: blur(20px);
 }
 .modal-content {
-  
   padding: 20px;
   border-radius: 20px;
   text-align: center;
@@ -442,25 +531,24 @@ body {
 
 .close-btn {
   position: absolute;
-  top: 7px; 
-  left: 105%; 
+  top: 7px;
+  left: 105%;
   transform: translate(-100%, 0);
   background: white;
   border: none;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   cursor: pointer;
   color: #b0afa1;
-  width: 30px; 
-  height: 30px; 
-  border-radius: 50%; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  padding: 0; 
+  padding: 0;
   text-align: center;
 }
-
 
 .modal-title {
   font-size: 1.5rem;
@@ -469,13 +557,13 @@ body {
   padding: 15px;
   background-color: transparent;
   border-radius: 30px;
-  width: 100%!important;
+  width: 100% !important;
   border: 1px solid white;
 }
 
 .modal-body {
   margin-top: 20px;
-  background-color: rgba(255, 255, 255, 0.7); 
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 30px;
   border-radius: 40px;
   width: 80%;
@@ -485,11 +573,10 @@ body {
 .modal-body p {
   font-size: 1rem;
   color: #333;
-  padding:20px !important;
+  padding: 20px !important;
 }
 
 .modal-button {
- 
   padding: 10px 20px;
   background-color: #f2f2f2;
   border: none;
@@ -498,7 +585,7 @@ body {
   font-size: 1rem;
   font-weight: bold;
   color: #333;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   margin-bottom: 50px;
 }
 
@@ -533,7 +620,7 @@ body {
   justify-content: space-around;
   align-items: center;
   margin: 0;
-  justify-content: center
+  justify-content: center;
 }
 
 .step {
@@ -545,7 +632,7 @@ body {
 .line {
   width: 60px !important;
   height: 25px;
-  background: #D5D5D5;
+  background: #d5d5d5;
   flex: 1;
   border-right: 1px solid white;
   border: 1px solid white;
@@ -566,38 +653,33 @@ body {
   background-color: #6ad042;
 }
 
-
-
 .ref {
-  position: absolute; 
-  bottom: 5px; 
-  left: 80px; 
-  z-index: 2100; 
+  position: absolute;
+  bottom: 5px;
+  left: 80px;
+  z-index: 2100;
   text-align: left;
   width: 1200px;
- 
-  
 }
 
-.ref p{
-    font-size: 17px;
-    color: white !important;
-    
+.ref p {
+  font-size: 17px;
+  color: white !important;
 }
 
 /* desktop */
 @media (min-width: 1024px) {
   .left-logo {
-  position: absolute;
-  top: 60px;
-  left: 60px;
-}
+    position: absolute;
+    top: 60px;
+    left: 60px;
+  }
 
-.right-logo {
-  position: absolute;
-  top: 60px;
-  right: 60px;
-}
+  .right-logo {
+    position: absolute;
+    top: 60px;
+    right: 60px;
+  }
 }
 /* Responsive styling */
 /* ipads */
@@ -638,16 +720,14 @@ body {
 
 /* mobiles */
 @media (max-width: 480px) {
-   .left-logo {
+  .left-logo {
     top: 20px;
     left: 0;
-    
   }
 
   .right-logo {
     top: 20px;
     right: 0;
- 
   }
   .top-right {
     width: 250px;
@@ -671,6 +751,4 @@ body {
     font-size: 12px;
   }
 }
-
-
 </style>

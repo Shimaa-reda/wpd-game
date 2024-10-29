@@ -24,6 +24,20 @@
     </video>
 
     <!-- Overlay for displaying counters -->
+    <div class="bar">
+           <div class="step-slider">
+          <div class="step" :class="{ checked: progressStep >= 1 }"></div>
+          <div class="line" :class="{ active: progressStep >= 1 }"></div>
+          <div class="step" :class="{ checked: progressStep >= 2 }"></div>
+          <div class="line" :class="{ active: progressStep >= 2 }"></div>
+          <div class="step" :class="{ checked: progressStep >= 3 }"></div>
+          <div class="line" :class="{ active: progressStep >= 3 }"></div>
+          <div class="step" :class="{ checked: progressStep >= 4 }"></div>
+          <div class="line" :class="{ active: progressStep >= 4 }"></div>
+          <div class="step" :class="{ checked: progressStep === 5 }"></div>
+          <div class="line" :class="{ active: progressStep >= 5 }"></div>
+        </div>
+      </div>
     <div class="counters-overlay">
       <div class="counter">
         <span>
@@ -55,6 +69,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router'; // Import the useRouter function
+const progressStep = ref(5);
 
 const loveCount = ref(0);
 const careCount = ref(0);
@@ -216,11 +231,27 @@ video {
   text-align: center;
   transition: background-color 0.3s;
   position: absolute;
-  left: 40px;
-  bottom: 10px;
+  right: 400px;
+  bottom: 30px;
 }
 
 .audio-control:hover {
   background-color: #99176e; 
 }
+.bar{
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 550px;
+  padding: 20px;
+  border-radius: 50px 50px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 10000;
+}
+
 </style>
