@@ -57,6 +57,7 @@
         </div>
       </div>
       <div class="bar">
+        <p style="color:white; margin-left:-70px !important; width:300px">With our collective Care & Efforts this preemie's health state is improving.</p>
         <div class="step-slider">
           <div class="step" :class="{ checked: progressStep >= 1 }"></div>
           <div class="line" :class="{ active: progressStep >= 1 }"></div>
@@ -375,24 +376,20 @@ function controlPanel() {
     progressStep.value += 1;
 
     backgroundImage = new URL("@/assets/images/day1.png", import.meta.url).href;
-    console.log("First Day");
   } else if (localStorage.getItem("selectedOption") === "baby2") {
     progressStep.value += 3;
 
     backgroundImage = new URL("@/assets/images/day2.png", import.meta.url).href;
-    console.log("Second Day");
   } else if (localStorage.getItem("selectedOption") === "baby3") {
     progressStep.value += 4;
 
     backgroundImage = new URL("@/assets/images/day3.png", import.meta.url).href;
-    console.log("Third Day");
   } else if (localStorage.getItem("selectedOption") === "video") {
-    console.log("Fourth Day");
     progressStep.value += 5;
     router.push({ name: "lastday" });
   } else {
     backgroundImage = new URL("@/assets/images/day1.png", import.meta.url).href;
-    console.log("default");
+     progressStep.value += 1
   }
 
   // Set the background image if one was selected
@@ -450,7 +447,7 @@ body {
 .bottom-center {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 53%;
   transform: translateX(-50%);
   text-align: center;
   width: 650px;
@@ -478,6 +475,11 @@ body {
   justify-content: center;
   align-items: center;
   /* z-index: 10000; */
+}
+
+.bar p {
+ 
+  left: 10px;
 }
 
 .bottom-center p {
@@ -605,7 +607,7 @@ body {
 .step-slider {
   display: flex;
   align-items: center;
-  margin-bottom: 20px !important;
+  
 }
 
 .step {

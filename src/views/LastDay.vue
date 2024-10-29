@@ -25,6 +25,8 @@
 
     <!-- Overlay for displaying counters -->
     <div class="bar">
+        <p style="color:white; margin-left:-70px !important; width:300px">With our collective Care & Efforts this preemie's health state is improving.</p>
+
            <div class="step-slider">
           <div class="step" :class="{ checked: progressStep >= 1 }"></div>
           <div class="line" :class="{ active: progressStep >= 1 }"></div>
@@ -232,7 +234,7 @@ video {
   transition: background-color 0.3s;
   position: absolute;
   right: 400px;
-  bottom: 30px;
+  bottom: 20px;
 }
 
 .audio-control:hover {
